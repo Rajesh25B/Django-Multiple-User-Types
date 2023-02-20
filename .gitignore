@@ -190,5 +190,5 @@ yarn-error.log*
 .env
 /migrations
 /__pycache__
-.docs.md
+docs.md
 docs.txt

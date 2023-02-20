@@ -77,7 +77,7 @@ DB_ROUTER SETUP
 - hit verify endpoint at api/token/verify/ by passing newly generated at refresh endpoint
   access token and expect "{}" as output
 
-### 4) Creating and Retrieving Coffee Types
+### 4) Creating and Retrieving Coffee Types (Two endpoints for special user types)
 
 - Allow store_manager for creating coffee_type
 - create an endpoint that returns all coffee_types if we dont pass slug as query param
@@ -98,3 +98,17 @@ DB_ROUTER SETUP
     http://127.0.0.1:8000/api/coffee/manage?slug=costa-coffee
     we get coffee particular to that slug
   - coffees return only to the special users, not normal users
+
+5. Retrieving Coffee Types for normal users (Two endpoints for normal types), view details of a particular type based on slug
+
+- create a view ListingCoffeeDetailView
+- create an endpoint
+- Test in postman
+
+  - pass Auth header bearer token
+  - http://127.0.0.1:8000/api/coffee/manage?slug=costa-coffee
+
+- create a new view ListingView
+- create an endpoint
+- Test in postman
+  - http://127.0.0.1:8000/api/coffee/coffee-list/
