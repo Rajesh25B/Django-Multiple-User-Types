@@ -76,3 +76,14 @@ DB_ROUTER SETUP
 - get new access token by passing refresh token on endpoint api/token/refresh
 - hit verify endpoint at api/token/verify/ by passing newly generated at refresh endpoint
   access token and expect "{}" as output
+
+### 4) Creating and Retrieving Coffee Types
+
+- Allow store_manager for creating coffee_type
+- create an endpoint that returns all coffee_types if we dont pass slug as query param
+  , if we pass slug then it should one coffee_type
+- create a new view called ManageListingView, add methods get and post
+- work on post method, create endpoint and test in postman
+  - testing in postman by including auth header access token (Bearer token)
+  - test for both normal user and special user login tokens
+  - add content-type, application/json and add coffee details
