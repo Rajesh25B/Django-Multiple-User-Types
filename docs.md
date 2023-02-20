@@ -87,3 +87,14 @@ DB_ROUTER SETUP
   - testing in postman by including auth header access token (Bearer token)
   - test for both normal user and special user login tokens
   - add content-type, application/json and add coffee details
+  - if we pass content-type at http://127.0.0.1:8000/api/coffee/manage/
+    it creates a new coffee
+- work on get method, test in postman
+  - testing in postman by including auth header access token (Bearer token)
+  - test for both normal user and special user login tokens
+  - add auth header with bearer token and check list of coffee types
+  - if we pass http://127.0.0.1:8000/api/coffee/manage/ we get all coffee-types
+  - if we pass slug
+    http://127.0.0.1:8000/api/coffee/manage?slug=costa-coffee
+    we get coffee particular to that slug
+  - coffees return only to the special users, not normal users
