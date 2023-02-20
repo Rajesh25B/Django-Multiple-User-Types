@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt',
+    'django_extensions',
     'users',
 ]
 
@@ -93,6 +94,8 @@ DATABASES = {
         'HOST': 'localhost' 
     },
 }
+
+DATABASE_ROUTERS = ['users.router.AuthRouter',]
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=50),
