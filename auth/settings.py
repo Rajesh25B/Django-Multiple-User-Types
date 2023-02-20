@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django_extensions',
     'users',
+    'coffee_types'
 ]
 
 MIDDLEWARE = [
@@ -95,7 +96,9 @@ DATABASES = {
     },
 }
 
-DATABASE_ROUTERS = ['users.router.AuthRouter',]
+DATABASE_ROUTERS = ['users.router.AuthRouter', 
+                    'coffee_types.router.CoffeeRouter'
+                ]
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=50),

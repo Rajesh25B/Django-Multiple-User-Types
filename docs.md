@@ -24,6 +24,8 @@ IMP POINTS
 
 - In django, cross-database relationships are not supported in django
 
+1. users app
+
 USER MODEL SETUP
 
 - implement custom user model
@@ -46,4 +48,18 @@ DB_ROUTER SETUP
   \q (Exists out the db terminal)
 - create superuser
 - access admin site
-- we get error, so add some apps to router.py file
+- we get error, so add some apps to router.py file and check admin site working
+  properly
+
+2. coffee_types app
+
+- create a Coffee model and define model fields and methods
+- run makemigrations
+- create router.py file and configure settings
+- migrate 'python manage.py migrate coffee_types --database=listings'
+- connect to the db on psql using
+  \l (lists all available dbs)
+  \c coffee_listings (connect to the coffee_listings db)
+  \dt (lists out the tables)
+  coffee_users=# SELECT \* FROM coffee_types_coffee; (gives us the data)
+  \q (Exists out the db terminal)
