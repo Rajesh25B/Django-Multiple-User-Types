@@ -63,3 +63,16 @@ DB_ROUTER SETUP
   \dt (lists out the tables)
   coffee_users=# SELECT \* FROM coffee_types_coffee; (gives us the data)
   \q (Exists out the db terminal)
+
+3. logic for registering an account, retrieving the user data, test out auth based endpoints
+
+- create 2 drf views (register and retreive) in views.py (one needs no permissions and other needs them)
+- create urls.py and include in main projects urls.py
+- test in postman by registering few accounts with switching flags of is_accountant, is_manager etc.
+- register normal users
+- register other user
+- login normal/other user==> pass email&pwd, get refresh and access tokens
+- retrieve user profile at api/auth/me/ endpoint by passing authorization headers with access tokens
+- get new access token by passing refresh token on endpoint api/token/refresh
+- hit verify endpoint at api/token/verify/ by passing newly generated at refresh endpoint
+  access token and expect "{}" as output
