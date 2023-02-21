@@ -27,6 +27,10 @@ class Coffee(models.Model):
     date_created = models.DateTimeField(default=now)
 
     def delete(self):
+        '''
+        When coffee obj gets deleted, 
+        images should be deleted from the store.
+        '''
         self.main_photo.storage.delete(self.main_photo.name)
         self.photo_1.storage.delete(self.photo_1.name)
         self.photo_2.storage.delete(self.photo_2.name)
@@ -35,4 +39,3 @@ class Coffee(models.Model):
 
     def __str__(self):
         return self.title
-    
