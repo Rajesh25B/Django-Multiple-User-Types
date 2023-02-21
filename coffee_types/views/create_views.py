@@ -118,3 +118,100 @@ class ManageListingView(APIView):
                 {'error': 'Something went wrong when creating new coffee'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+            
+    def put(self, request):
+        try:
+            user = request.user
+            if not user.is_manager:
+                return Response(
+                    {'error': 'You dont have permission'},
+                    status=status.HTTP_403_FORBIDDEN
+                )
+            data = request.data
+            title = data['title']
+            slug = data['slug']
+            description = data['description']
+            price = data['price']
+            coffee_type = data['coffee_type']
+            
+            if coffee_type == 'FOR_PREMIUM_USERS':
+                coffee_type = 'For Premium'
+            else:
+                coffee_type = 'For regular'
+            
+            main_photo = data['main_photo']
+            photo_1 = data['photo_1']
+            photo_2 = data['photo_2']
+            is_published = data['is_published']
+
+            if is_published == 'True':
+                is_published = True
+            else:
+                is_published = False
+
+            Coffee.objects.update(
+                title=title,
+                slug=slug,
+                description=description,
+                price=price,
+                coffee_type=coffee_type,
+                main_photo=main_photo,
+                photo_1=photo_1,
+                photo_2=photo_2,
+                is_published=is_published
+            )
+
+            return Response(
+                {'success': 'Coffee details updated successfully'},
+                status=status.HTTP_200_OK
+            )
+        except:
+            return Response(
+                {'error': 'You dont have permission'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+    def patch(self, request):
+        try:
+            user = request.user
+
+            if not user.is_manager and not user.is_superuser:
+                return Response(
+                    {'error': 'User does not have necessary permissions'},
+                    status=status.HTTP_403_FORBIDDEN
+                )
+
+            data = request.data
+
+            slug = data['slug']
+
+            is_published = data['is_published']
+            if is_published == 'True':
+                is_published = True
+            else:
+                is_published = False
+
+            if not Coffee.objects.filter(
+                store_manager_email=user.email,
+                slug=slug
+            ).exists():
+                return Response(
+                    {'error': 'Coffee does not exist'},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+
+            Coffee.objects.filter(
+                store_manager_email=user.email,
+                slug=slug
+            ).update(
+                is_published=is_published
+            )
+
+            return Response(
+                {'success': 'Coffee publish status updated successfully'},
+                status=status.HTTP_200_OK
+            )
+        except:
+            return Response(
+                {'error': 'Something went wrong when updating listing'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
