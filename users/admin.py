@@ -2,6 +2,9 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 
+# local imports
+from coffee_types.extras import delete_coffee_helper_func
+
 User = get_user_model()
 
 
@@ -18,7 +21,9 @@ class UserAdmin(admin.ModelAdmin):
 
     def delete_model(self, request, obj):
         # Delete objects from the 'users' database
+        email = obj.email
         obj.delete(using=self.using)
+        delete_coffee_helper_func(email)
 
     def get_queryset(self, request):
         # Look for objects on the 'users' database.
