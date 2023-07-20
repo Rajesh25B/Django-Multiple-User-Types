@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -13,7 +14,7 @@ class RegisterView(APIView):
     Registering user accounts
     '''
     permission_classes = [permissions.AllowAny, ]
-    
+
     def post(self, request):
         try:
             data = request.data
@@ -28,15 +29,16 @@ class RegisterView(APIView):
             is_baristas = data['is_baristas']
             is_manager = data['is_manager']
             is_accountant = data['is_accountant']
-            
+
             is_baristas = True if is_baristas == 'True' else False
             is_manager = True if is_manager == 'True' else False
             is_accountant = True if is_accountant == 'True' else False
-            
+
             if password == re_password:
                 if len(password) >= 8:
                     if not User.objects.filter(email=email).exists():
-                        if not is_manager and not is_accountant and not is_baristas:
+                        if not is_manager \
+                                and not is_accountant and not is_baristas:
                             User.objects.create_user(
                                 email=email,
                                 name=name,
@@ -82,31 +84,30 @@ class RegisterView(APIView):
                             {'error': 'User with this e-mail already exists'},
                             status=status.HTTP_400_BAD_REQUEST
                         )
-                
+
                 else:
                     return Response(
-                    {'error': 'passwords must be 8 characters'},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-                    
-            
+                        {'error': 'passwords must be 8 characters'},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+
             else:
                 return Response(
                     {'error': 'passwords do not match'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
-        except:
+        except ValidationError:
             return Response(
                 {'error': 'Something went wrong'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
-                        
 
 
 class RetrieveUserView(APIView):
     '''
     Retrieving the user data
     '''
+
     def get(self, request, format=None):
         try:
             user = request.user
@@ -116,7 +117,7 @@ class RetrieveUserView(APIView):
                 {'user': user.data},
                 status=status.HTTP_200_OK
             )
-        except:
+        except ObjectDoesNotExist:
             return Response(
                 {'error': 'Something went wrong when retrieving user details'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR

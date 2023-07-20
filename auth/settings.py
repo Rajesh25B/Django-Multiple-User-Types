@@ -85,29 +85,29 @@ DATABASES = {
         'NAME': 'coffee_users',
         'PASSWORD': 'password',
         'USER': 'postgres',
-        'HOST': 'localhost' 
+        'HOST': 'localhost'
     },
     'listings': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'coffee_types',
         'PASSWORD': 'password',
         'USER': 'postgres',
-        'HOST': 'localhost' 
+        'HOST': 'localhost'
     },
 }
 
-DATABASE_ROUTERS = ['users.router.AuthRouter', 
+DATABASE_ROUTERS = ['users.router.AuthRouter',
                     'coffee_types.router.CoffeeRouter'
-                ]
+                    ]
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=50),
     "REFRESH_TOKEN_LIFETIME": timedelta(minutes=60),
-    
+
 
     "ALGORITHM": "HS256",
 
-    
+
     "AUTH_HEADER_TYPES": ("Bearer",),
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
     "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
@@ -164,7 +164,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT =  BASE_DIR / 'media'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

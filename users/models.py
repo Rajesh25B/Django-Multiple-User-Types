@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, \
-                                        BaseUserManager
+    BaseUserManager
 
 # Create your models here.
 
@@ -23,22 +23,21 @@ class UserAccountManager(BaseUserManager):
 
         return user
 
-    def create_baristas(self, email, name, password=None):
-        user = self.create_user(email, name, password)
+    def create_baristas(self, email, name, is_manager, password=None):
+        if self.is_manager:
+            user = self.create_user(email, name, password)
+            user.is_baristas = True
+            user.save(using=self._db)
+            return user
 
-        user.is_baristas = True
-        user.save(using=self._db)
+    def create_manager(self, email, is_staff, name, password=None):
+        if self.is_staff:
+            user = self.create_user(email, name, password)
+            user.is_manager = True
+            user.save(using=self._db)
 
-        return user
-    
-    def create_manager(self, email, name, password=None):
-        user = self.create_user(email, name, password)
+            return user
 
-        user.is_manager = True
-        user.save(using=self._db)
-
-        return user
-    
     def create_accountant(self, email, name, password=None):
         user = self.create_user(email, name, password)
 

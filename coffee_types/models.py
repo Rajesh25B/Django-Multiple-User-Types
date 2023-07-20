@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.timezone import now
 # Create your models here.
 
+
 class Coffee(models.Model):
     '''
     link coffeetype to the manager that made the coffeetype itself.
@@ -28,7 +29,7 @@ class Coffee(models.Model):
 
     def delete(self):
         '''
-        When coffee obj gets deleted, 
+        When coffee obj gets deleted,
         images should be deleted from the store.
         '''
         self.main_photo.storage.delete(self.main_photo.name)
