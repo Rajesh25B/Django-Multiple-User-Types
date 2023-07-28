@@ -1,6 +1,10 @@
+import uuid
+
 from django.db import models
 from django.utils.timezone import now
-# Create your models here.
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class Coffee(models.Model):
@@ -40,3 +44,12 @@ class Coffee(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Order(models.Model):
+    '''handles the coffee orders'''
+    coffee = models.ForeignKey(Coffee, on_delete=models.DO_NOTHING, null=True)
+    identifier = models.UUIDField(default=uuid.uuid4, editable=False)
+
+    def __str__(self):
+        return self.coffee.title
